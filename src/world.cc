@@ -1,6 +1,6 @@
 #include <iostream>
 
-static const char hello[] = "hello world!"
+static const char hello[] = "hello sky!"
 ;
 int main()
 {
