@@ -6,7 +6,7 @@ $(info RUN = $(RUN))
 
 .PHONY: all
 all: $(RUN)
-++ @for p in $^ ; do ./$$p ; done
+++ @for p in $^ ; do echo -------------------; echo $$p ; echo ------; ./$$p ; echo ; done
 
 %: src/%.cc
 ++ g++ -std=c++17 -o $@ $<
