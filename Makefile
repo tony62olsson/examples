@@ -1,12 +1,28 @@
-.RECIPEPREFIX = ++
+.RECIPEPREFIX = @
 
 SRC_FILES := $(wildcard src/*.cc)
-override RUN := $(subst :, ,$(notdir $(SRC_FILES:.cc=)))
-$(info RUN = $(RUN))
+STD := 17
+override RUN := $(notdir $(SRC_FILES:.cc=))
+#$(info RUN = $(RUN))
 
 .PHONY: all
 all: $(RUN)
-++ @for p in $^ ; do echo -------------------; echo $$p ; echo ------; ./$$p ; echo ; done
 
-%: src/%.cc
-++ g++ -std=c++17 -o $@ $<
+list:
+@@echo $(RUN)
+
+.PHONY: FORCE
+FORCE:
+
+define target
+$1: bin/$1
+@@echo
+@@echo $$@
+@@echo -----------------------------
+@@$$<
+endef
+$(foreach t,$(RUN),$(eval $(call target,$t)))
+
+bin/%: src/%.cc
+@@mkdir -p bin
+@g++ -std=c++$(STD) -o $@ $<
